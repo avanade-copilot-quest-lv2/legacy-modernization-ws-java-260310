@@ -100,3 +100,8 @@ host-manager*.log
 # JVM crash dumps
 hs_err_pid*.log
 core.*
+
+# vscode
+.vscode-remote
+.copilot
+.config

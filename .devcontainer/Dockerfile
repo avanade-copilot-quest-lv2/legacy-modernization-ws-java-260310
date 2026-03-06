@@ -168,6 +168,38 @@ RUN echo "Installing Apache Ant 1.6.5 (compatible with Java 5)..." && \
     rm -f apache-ant-1.6.5-bin.tar.gz && \
     echo "Apache Ant installation completed"
 
+# アプリケーション依存JARのダウンロード（ビルドに必要なライブラリ）
+RUN echo "Downloading application dependency JARs..." && \
+    mkdir -p /app/lib && \
+    cd /app/lib && \
+    # Struts 1.2.9 (org.apache.struts.action, org.apache.struts.actions)
+    wget -q https://repo1.maven.org/maven2/struts/struts/1.2.9/struts-1.2.9.jar && \
+    # Struts Taglib 1.3.10 (TLDファイル生成に必要)
+    wget -q https://repo1.maven.org/maven2/org/apache/struts/struts-taglib/1.3.10/struts-taglib-1.3.10.jar && \
+    # Servlet API 2.4 (javax.servlet.*)
+    wget -q https://repo1.maven.org/maven2/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar && \
+    # Struts依存ライブラリ
+    wget -q https://repo1.maven.org/maven2/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar && \
+    wget -q https://repo1.maven.org/maven2/commons-digester/commons-digester/1.8/commons-digester-1.8.jar && \
+    wget -q https://repo1.maven.org/maven2/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar && \
+    wget -q https://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.1.1/commons-fileupload-1.1.1.jar && \
+    wget -q https://repo1.maven.org/maven2/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1.jar && \
+    wget -q https://repo1.maven.org/maven2/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar && \
+    wget -q https://repo1.maven.org/maven2/oro/oro/2.0.8/oro-2.0.8.jar && \
+    # Hibernate 3.6.10.Final (org.hibernate.*)
+    wget -q https://repo1.maven.org/maven2/org/hibernate/hibernate-core/3.6.10.Final/hibernate-core-3.6.10.Final.jar && \
+    wget -q https://repo1.maven.org/maven2/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.1.Final/hibernate-jpa-2.0-api-1.0.1.Final.jar && \
+    wget -q https://repo1.maven.org/maven2/antlr/antlr/2.7.6/antlr-2.7.6.jar && \
+    wget -q https://repo1.maven.org/maven2/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar && \
+    wget -q https://repo1.maven.org/maven2/javassist/javassist/3.12.0.GA/javassist-3.12.0.GA.jar && \
+    wget -q https://repo1.maven.org/maven2/javax/transaction/jta/1.1/jta-1.1.jar && \
+    wget -q https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar && \
+    wget -q https://repo1.maven.org/maven2/org/slf4j/slf4j-simple/1.6.1/slf4j-simple-1.6.1.jar && \
+    # MySQL JDBC Driver 5.1.49 (Java 5互換)
+    wget -q https://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.49/mysql-connector-java-5.1.49.jar && \
+    chown -R javauser:javauser /app/lib && \
+    echo "Dependency JARs downloaded successfully"
+
 # 環境変数の設定（ホストの環境変数を確実に上書き）
 ENV JAVA_HOME=/usr/java/jdk1.5.0_22
 ENV ANT_HOME=/opt/ant
