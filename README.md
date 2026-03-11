@@ -10,6 +10,11 @@ code .
 ant clean build
 ```
 
+### Codespaces Notes
+
+- The app now reads database connection settings from `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD`. Defaults stay compatible with the bundled Docker services.
+- In Codespaces the dev container cannot resolve the MySQL service name, so `DB_HOST` is set to `127.0.0.1` in `.devcontainer/devcontainer.json`. Keep the MySQL service running (started by the devcontainer init command) and use the forwarded port 3306.
+
 ## Quick Start (Without Dev Container)
 
 ### Prerequisites

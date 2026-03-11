@@ -5,7 +5,6 @@ import java.io.*;
 import java.sql.Date;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.hibernate.Query;
@@ -14,6 +13,7 @@ import org.hibernate.Transaction;
 import com.example.bookstore.constant.AppConstants;
 import com.example.bookstore.dao.PurchaseOrderDAO;
 import com.example.bookstore.util.HibernateUtil;
+import com.example.bookstore.util.DbUtil;
 
 public class PurchaseOrderDAOImpl implements PurchaseOrderDAO, AppConstants {
 
@@ -107,9 +107,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO, AppConstants {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT MAX(po_number) AS max_po FROM purchase_order");
             if (rs.next()) {

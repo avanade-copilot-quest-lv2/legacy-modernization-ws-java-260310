@@ -5,7 +5,6 @@ import java.io.*;
 import java.sql.Date;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.hibernate.Session;
@@ -14,12 +13,9 @@ import com.example.bookstore.constant.AppConstants;
 import com.example.bookstore.dao.AuditLogDAO;
 import com.example.bookstore.model.AuditLog;
 import com.example.bookstore.util.HibernateUtil;
+import com.example.bookstore.util.DbUtil;
 
 public class AuditLogDAOImpl implements AuditLogDAO, AppConstants {
-
-    private static final String DB_URL = "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false";
-    private static final String DB_USER = "legacy_user";
-    private static final String DB_PASS = "legacy_pass";
 
     
     public int save(Object auditLog) {
@@ -48,8 +44,7 @@ public class AuditLogDAOImpl implements AuditLogDAO, AppConstants {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
 
             StringBuffer sql = new StringBuffer("SELECT * FROM audit_log WHERE 1=1");
@@ -112,8 +107,7 @@ public class AuditLogDAOImpl implements AuditLogDAO, AppConstants {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
 
             StringBuffer sql = new StringBuffer("SELECT count(*) AS cnt FROM audit_log WHERE 1=1");

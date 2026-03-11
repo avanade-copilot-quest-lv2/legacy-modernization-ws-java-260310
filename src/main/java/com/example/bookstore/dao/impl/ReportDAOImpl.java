@@ -5,18 +5,14 @@ import java.io.*;
 import java.sql.Date;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 import com.example.bookstore.constant.AppConstants;
 import com.example.bookstore.dao.ReportDAO;
+import com.example.bookstore.util.DbUtil;
 
 public class ReportDAOImpl implements ReportDAO, AppConstants {
-
-    private static final String DB_URL = "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false";
-    private static final String DB_USER = "legacy_user";
-    private static final String DB_PASS = "legacy_pass";
 
     
     public List findDailySalesReport(String startDate, String endDate) {
@@ -27,8 +23,7 @@ public class ReportDAOImpl implements ReportDAO, AppConstants {
         int timeout = 30000;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
 
             StringBuffer sql = new StringBuffer();
@@ -77,8 +72,7 @@ public class ReportDAOImpl implements ReportDAO, AppConstants {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
 
             StringBuffer sql = new StringBuffer();

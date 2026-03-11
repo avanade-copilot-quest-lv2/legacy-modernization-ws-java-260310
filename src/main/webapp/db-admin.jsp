@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.Enumeration" %>
+<%@ page import="com.example.bookstore.util.DbUtil" %>
 <%
     // No auth check! Diagnostic page accessible to anyone!
 %>
@@ -56,10 +57,10 @@
     <div class="env-info" style="border-left: 4px solid #ff9800;">
         <b>Database Connection Info:</b>
         <table cellpadding="2">
-            <tr><td style="font-weight:bold;">Host:</td><td>legacy-mysql:3306</td></tr>
-            <tr><td style="font-weight:bold;">Database:</td><td>legacy_db</td></tr>
-            <tr><td style="font-weight:bold;">User:</td><td>legacy_user</td></tr>
-            <tr><td style="font-weight:bold;">Password:</td><td>legacy_pass</td></tr>
+            <tr><td style="font-weight:bold;">Host:</td><td><%= DbUtil.getHost() %>:<%= DbUtil.getPort() %></td></tr>
+            <tr><td style="font-weight:bold;">Database:</td><td><%= DbUtil.getDatabase() %></td></tr>
+            <tr><td style="font-weight:bold;">User:</td><td><%= DbUtil.getUser() %></td></tr>
+            <tr><td style="font-weight:bold;">Password:</td><td><%= DbUtil.getPassword() %></td></tr>
             <tr><td style="font-weight:bold;">Root Password:</td><td>root</td></tr>
         </table>
     </div>

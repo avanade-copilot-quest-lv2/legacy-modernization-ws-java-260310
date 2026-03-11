@@ -24,10 +24,6 @@ public class CommonUtil implements AppConstants {
 
     private static int counter = 0;
 
-    private static final String DB_URL = "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false&autoReconnect=true";
-    private static final String DB_USER = "legacy_user";
-    private static final String DB_PASS = "legacy_pass";
-
     
     public static String formatDate(Date d) {
         if (d == null) return "";
@@ -344,7 +340,7 @@ public class CommonUtil implements AppConstants {
         Connection conn = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            conn = DbUtil.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("ERROR: Failed to get DB connection");

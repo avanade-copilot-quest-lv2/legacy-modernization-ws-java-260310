@@ -5,7 +5,6 @@ import java.io.*;
 import java.sql.Date;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -17,6 +16,7 @@ import com.example.bookstore.constant.AppConstants;
 import com.example.bookstore.dao.StockTransactionDAO;
 import com.example.bookstore.model.StockTransaction;
 import com.example.bookstore.util.HibernateUtil;
+import com.example.bookstore.util.DbUtil;
 
 public class StockTransactionDAOImpl implements StockTransactionDAO, AppConstants {
 
@@ -53,9 +53,7 @@ public class StockTransactionDAOImpl implements StockTransactionDAO, AppConstant
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM stock_transaction WHERE book_id = '" + bookId + "' ORDER BY crt_dt DESC");
             while (rs.next()) {
@@ -90,9 +88,7 @@ public class StockTransactionDAOImpl implements StockTransactionDAO, AppConstant
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
 
             rs = stmt.executeQuery("SELECT * FROM stock_transaction WHERE crt_dt >= '" + fromDate
@@ -126,9 +122,7 @@ public class StockTransactionDAOImpl implements StockTransactionDAO, AppConstant
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM stock_transaction WHERE txn_type = '" + txnType + "' ORDER BY crt_dt DESC");
             while (rs.next()) {
@@ -179,9 +173,7 @@ public class StockTransactionDAOImpl implements StockTransactionDAO, AppConstant
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM stock_transaction WHERE user_id = '" + userId + "' ORDER BY crt_dt DESC");
             while (rs.next()) {
