@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import com.example.bookstore.constant.AppConstants;
 import com.example.bookstore.manager.BookstoreManager;
 import com.example.bookstore.util.CommonUtil;
+import com.example.bookstore.util.DbUtil;
 
 public class BookAction extends Action implements AppConstants {
 
@@ -50,9 +51,7 @@ public class BookAction extends Action implements AppConstants {
                 Statement stmt = null;
                 ResultSet rs = null;
                 try {
-                    Class.forName("com.mysql.jdbc.Driver");
-                    conn = DriverManager.getConnection(
-                        "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+                    conn = DbUtil.getConnection();
                     stmt = conn.createStatement();
 
                     StringBuffer sql = new StringBuffer("SELECT * FROM books WHERE (del_flg = '0' OR del_flg IS NULL)");

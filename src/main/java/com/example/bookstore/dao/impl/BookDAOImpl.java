@@ -5,7 +5,6 @@ import java.io.*;
 import java.sql.Date;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
@@ -20,6 +19,7 @@ import com.example.bookstore.constant.AppConstants;
 import com.example.bookstore.dao.BookDAO;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.util.HibernateUtil;
+import com.example.bookstore.util.DbUtil;
 import com.example.bookstore.manager.BookstoreManager;
 
 public class BookDAOImpl implements BookDAO, AppConstants {
@@ -72,9 +72,7 @@ public class BookDAOImpl implements BookDAO, AppConstants {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
 
             rs = stmt.executeQuery("SELECT * FROM books WHERE title LIKE '%" + title + "%'" + " LIMIT 200");
@@ -113,9 +111,7 @@ public class BookDAOImpl implements BookDAO, AppConstants {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM books WHERE category_id = '" + catId + "'");
             while (rs.next()) {
@@ -211,9 +207,7 @@ public class BookDAOImpl implements BookDAO, AppConstants {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
 
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM books WHERE qty_in_stock <= '" + threshold + "' AND (del_flg = '0' OR del_flg IS NULL)");
@@ -245,9 +239,7 @@ public class BookDAOImpl implements BookDAO, AppConstants {
         try {
             String title = request.getParameter("title");
             String category = request.getParameter("categoryId");
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
             String sql = "SELECT * FROM books WHERE 1=1";
             if (title != null && title.length() > 0) {
@@ -286,9 +278,7 @@ public class BookDAOImpl implements BookDAO, AppConstants {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM books WHERE publisher LIKE '%" + publisher + "%'");
             while (rs.next()) {
@@ -326,9 +316,7 @@ public class BookDAOImpl implements BookDAO, AppConstants {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM books WHERE list_price >= " + minPrice + " AND list_price <= " + maxPrice);
             while (rs.next()) {

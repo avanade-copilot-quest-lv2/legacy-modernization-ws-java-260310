@@ -16,6 +16,7 @@ import com.example.bookstore.constant.AppConstants;
 import com.example.bookstore.manager.BookstoreManager;
 import com.example.bookstore.manager.UserManager;
 import com.example.bookstore.util.CommonUtil;
+import com.example.bookstore.util.DbUtil;
 
 public class AdminAction extends DispatchAction implements AppConstants {
 
@@ -214,9 +215,7 @@ public class AdminAction extends DispatchAction implements AppConstants {
             java.sql.ResultSet rs = null;
             String categoryCount = "0";
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conn = java.sql.DriverManager.getConnection(
-                    "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+                conn = DbUtil.getConnection();
                 stmt = conn.createStatement();
                 rs = stmt.executeQuery("SELECT COUNT(*) FROM categories WHERE del_flg = '0' OR del_flg IS NULL");
                 if (rs.next()) {

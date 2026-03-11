@@ -9,6 +9,7 @@ import java.util.concurrent.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import com.example.bookstore.util.DbUtil;
 
 public class HibernateUtil {
 
@@ -18,7 +19,11 @@ public class HibernateUtil {
 
     static {
         try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
+            Configuration configuration = new Configuration().configure();
+            configuration.setProperty("hibernate.connection.url", DbUtil.buildJdbcUrl());
+            configuration.setProperty("hibernate.connection.username", DbUtil.getUser());
+            configuration.setProperty("hibernate.connection.password", DbUtil.getPassword());
+            sessionFactory = configuration.buildSessionFactory();
         } catch (Throwable ex) {
 
             System.err.println("Initial SessionFactory creation failed." + ex);

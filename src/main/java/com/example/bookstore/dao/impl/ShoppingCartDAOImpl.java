@@ -5,7 +5,6 @@ import java.io.*;
 import java.sql.Date;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 
 import org.hibernate.Query;
@@ -15,6 +14,7 @@ import org.hibernate.Transaction;
 import com.example.bookstore.constant.AppConstants;
 import com.example.bookstore.dao.ShoppingCartDAO;
 import com.example.bookstore.util.HibernateUtil;
+import com.example.bookstore.util.DbUtil;
 
 public class ShoppingCartDAOImpl implements ShoppingCartDAO, AppConstants {
 
@@ -86,9 +86,7 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO, AppConstants {
         Connection conn = null;
         Statement stmt = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
 
             stmt.executeUpdate("DELETE FROM shopping_cart WHERE session_id = '" + sessionId + "'");
@@ -107,9 +105,7 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO, AppConstants {
         Connection conn = null;
         Statement stmt = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
             stmt.executeUpdate("DELETE FROM shopping_cart WHERE customer_id = '" + customerId + "'");
             return 0;

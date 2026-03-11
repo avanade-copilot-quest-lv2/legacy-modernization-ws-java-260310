@@ -112,7 +112,12 @@
         "TZ": "Asia/Tokyo",
         "LANG": "ja_JP.UTF-8",
         "LANGUAGE": "ja_JP:ja",
-        "LC_ALL": "C.UTF-8"
+        "LC_ALL": "C.UTF-8",
+        "DB_HOST": "127.0.0.1",
+        "DB_PORT": "3306",
+        "DB_NAME": "legacy_db",
+        "DB_USER": "legacy_user",
+        "DB_PASSWORD": "legacy_pass"
     },
     // デバッグ設定のサポート
     "initializeCommand": "bash -c 'echo \"Starting host services for Dev Container...\" && bash ${localWorkspaceFolder}/.devcontainer/scripts/cleanup-old-containers.sh && docker compose -f ${localWorkspaceFolder}/.devcontainer/compose.services.yaml up -d --remove-orphans tomcat mysql phpmyadmin && echo \"Host services started\"'",

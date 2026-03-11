@@ -5,7 +5,6 @@ import java.io.*;
 import java.sql.Date;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -18,6 +17,7 @@ import com.example.bookstore.constant.AppConstants;
 import com.example.bookstore.dao.OrderDAO;
 import com.example.bookstore.model.Order;
 import com.example.bookstore.util.HibernateUtil;
+import com.example.bookstore.util.DbUtil;
 import com.example.bookstore.manager.UserManager;
 
 public class OrderDAOImpl implements OrderDAO, AppConstants {
@@ -115,9 +115,7 @@ public class OrderDAOImpl implements OrderDAO, AppConstants {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false", "legacy_user", "legacy_pass");
+            conn = DbUtil.getConnection();
             stmt = conn.createStatement();
 
             String sql = "SELECT * FROM orders WHERE order_dt >= '" + fromDate + "' AND order_dt <= '" + toDate + "' ORDER BY order_dt DESC";

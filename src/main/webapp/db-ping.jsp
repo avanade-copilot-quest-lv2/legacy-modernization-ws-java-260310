@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="com.example.bookstore.util.DbUtil" %>
 <%
     // No auth check — diagnostic page accessible to anyone!
     // SECURITY: exposes database connection details
@@ -32,9 +33,9 @@
     <%
         // INLINE JDBC IN JSP — severe anti-pattern!
         // Hard-coded credentials exposed in view layer!
-        String jdbcUrl = "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false&autoReconnect=true";
-        String jdbcUser = "legacy_user";
-        String jdbcPass = "legacy_pass";
+        String jdbcUrl = DbUtil.buildJdbcUrl();
+        String jdbcUser = DbUtil.getUser();
+        String jdbcPass = DbUtil.getPassword();
         Connection conn = null;
         long startTime = System.currentTimeMillis();
         try {

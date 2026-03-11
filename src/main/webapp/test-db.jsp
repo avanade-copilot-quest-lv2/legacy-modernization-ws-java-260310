@@ -2,6 +2,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Enumeration" %>
+<%@ page import="com.example.bookstore.util.DbUtil" %>
 <%
     // No auth check — diagnostic page accessible to anyone!
     // COPY-PASTED from db-ping.jsp with additions!
@@ -33,9 +34,9 @@
     <h3>1. JDBC Direct Connection</h3>
     <%
         // COPY-PASTED from db-ping.jsp!
-        String jdbcUrl = "jdbc:mysql://legacy-mysql:3306/legacy_db?useSSL=false&autoReconnect=true";
-        String jdbcUser = "legacy_user";
-        String jdbcPass = "legacy_pass";
+        String jdbcUrl = DbUtil.buildJdbcUrl();
+        String jdbcUser = DbUtil.getUser();
+        String jdbcPass = DbUtil.getPassword();
         Connection conn = null;
         long startTime = System.currentTimeMillis();
         try {
